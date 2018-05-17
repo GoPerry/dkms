@@ -1,0 +1,19 @@
+language: c
+sudo: required
+dist: trusty
+
+services:
+  - docker
+
+env:
+  - OS=debian-s390x
+  - OS=fedora-x86_64
+  - OS=debian-x86_64
+  - OS=ubuntu-x86_64
+  - OS=centos-x86_64
+
+install:
+  - ./contrib/ci/generate_docker.py
+
+script:
+  - docker run -e CI=true -t -v `pwd`/dist:/build/dist dkms-$OS
